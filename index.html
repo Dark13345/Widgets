@@ -13,7 +13,6 @@
     --line: #dcdad3;
     --accent: #2f6b5a;
     --accent-soft: #e3ece8;
-    --radius: 10px;
   }
   [data-theme="dark"] {
     --bg: #141615;
@@ -33,10 +32,9 @@
     font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     overflow-x: hidden;
   }
-  h1, h2 { text-wrap: balance; margin: 0; line-height: 1.2; }
+  h1, h2 { margin: 0; line-height: 1.2; }
   h1 { font-size: 34px; }
   h2 { font-size: 26px; }
-  p { margin: 0; }
 
   /* Шапка */
   .top {
@@ -44,15 +42,9 @@
     background: var(--bg);
     border-bottom: 1px solid var(--line);
   }
-  .top-inner {
-    display: flex; align-items: center; gap: 16px;
-    padding: 12px 32px;
-  }
+  .top-inner { display: flex; align-items: center; gap: 16px; padding: 12px 32px; }
   .brand { font-weight: 700; white-space: nowrap; }
-  .nav {
-    display: flex; gap: 6px; overflow-x: auto; flex: 1;
-    scrollbar-width: none;
-  }
+  .nav { display: flex; gap: 6px; overflow-x: auto; flex: 1; scrollbar-width: none; }
   .nav::-webkit-scrollbar { display: none; }
   .nav a {
     color: var(--muted); text-decoration: none; white-space: nowrap;
@@ -61,69 +53,47 @@
   }
   .nav a:hover { background: var(--accent-soft); color: var(--text); }
 
-  .wrap { padding: 40px 32px 80px; display: grid; gap: 56px; }
-
-  /* Блок виджета: название и переключатели сверху, виджет под ними */
-  .block { display: grid; gap: 16px; }
-  .info { display: grid; gap: 14px; }
-
-  .controls { display: flex; flex-wrap: wrap; gap: 14px 28px; align-items: end; }
-  .field { display: grid; gap: 6px; }
-  .field-label { font-size: 13px; color: var(--muted); }
-  .seg { display: flex; flex-wrap: wrap; gap: 6px; }
-  .seg button, .btn {
+  /* Переключатели */
+  .seg { display: flex; gap: 6px; }
+  .seg button {
     font: inherit; font-size: 14px; cursor: pointer;
     border: 1px solid var(--line); background: var(--surface); color: var(--text);
     padding: 6px 12px; border-radius: 8px;
-    transition: background .15s, border-color .15s, color .15s;
+    transition: background .15s, border-color .15s;
   }
-  .seg button:hover, .btn:hover { border-color: var(--accent); }
-  .seg button[aria-pressed="true"] {
-    background: var(--accent); border-color: var(--accent); color: #fff;
-  }
+  .seg button:hover { border-color: var(--accent); }
+  .seg button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
   [data-theme="dark"] .seg button[aria-pressed="true"] { color: #10201b; }
-  select {
-    font: inherit; font-size: 14px; color: var(--text);
-    background: var(--surface); border: 1px solid var(--line);
-    border-radius: 8px; padding: 7px 10px;
-  }
-  .checks { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 14px; }
-  .checks label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
 
-  .stage { display: grid; gap: 10px; min-width: 0; }
+  .wrap { padding: 40px 32px 80px; display: grid; gap: 48px; }
+
+  .block { display: grid; gap: 16px; }
+  .block-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+
   .widget {
     background: var(--surface); border: 1px solid var(--line);
-    border-radius: var(--radius); overflow: hidden;
+    border-radius: 10px; overflow: hidden;
   }
   .widget .tradingview-widget-container,
   .widget .tradingview-widget-container__widget { height: 100%; width: 100%; }
   .h-tape { min-height: 46px; }
-  .h-market { height: 390px; }
+  .h-market { height: 290px; }
   .h-overview { height: 520px; }
   .h-heat { height: 580px; }
-  .h-ta { height: 480px; }
+  .h-ta { height: 450px; }
   .h-cal { height: 580px; }
   .h-screener { height: 600px; }
-
-  details { font-size: 14px; }
-  summary { cursor: pointer; color: var(--muted); }
-  summary:hover { color: var(--text); }
-  pre {
-    margin: 10px 0 0; padding: 14px; overflow-x: auto;
-    background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
-    font: 13px/1.5 Consolas, "Courier New", monospace;
-  }
 
   @media (max-width: 640px) {
     h1 { font-size: 27px; }
     h2 { font-size: 22px; }
     .top-inner { padding: 10px 16px; gap: 10px; }
     .brand { display: none; }
-    .wrap { padding: 28px 16px 60px; gap: 44px; }
-    .h-market { height: 400px; }
+    .wrap { padding: 28px 16px 60px; gap: 40px; }
+    .h-market { height: 300px; }
     .h-overview { height: 440px; }
     .h-heat { height: 480px; }
-    .h-ta { height: 460px; }
+    .h-ta { height: 440px; }
     .h-cal { height: 520px; }
     .h-screener { height: 520px; }
   }
@@ -154,210 +124,45 @@
 
   <h1>Виджеты TradingView</h1>
 
-  <!-- 0. Ticker Tape -->
   <section class="block" id="tape">
-    <div class="info">
-      <h2>Ticker Tape</h2>
-      <div class="controls">
-        <div class="field">
-          <span class="field-label">Вид</span>
-          <div class="seg" data-control="tapeMode">
-            <button type="button" data-value="adaptive" aria-pressed="true">Адаптивный</button>
-            <button type="button" data-value="regular">Обычный</button>
-            <button type="button" data-value="compact">Компактный</button>
-          </div>
-        </div>
-        <div class="field">
-          <span class="field-label">Логотипы инструментов</span>
-          <div class="seg" data-control="tapeLogo">
-            <button type="button" data-value="1" aria-pressed="true">Показывать</button>
-            <button type="button" data-value="0">Скрыть</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="stage">
-      <div class="widget h-tape" id="w-tape"></div>
-      <details><summary>Параметры виджета</summary><pre id="c-tape"></pre></details>
-    </div>
+    <h2>Ticker Tape</h2>
+    <div class="widget h-tape" id="w-tape"></div>
   </section>
 
-  <!-- 1. Market Data -->
   <section class="block" id="market">
-    <div class="info">
-      <h2>Market Data</h2>
-      <div class="controls">
-        <div class="field">
-          <span class="field-label">Как сгруппировать</span>
-          <div class="seg" data-control="marketGroup">
-            <button type="button" data-value="one" aria-pressed="true">Одной таблицей</button>
-            <button type="button" data-value="split">По категориям</button>
-          </div>
-        </div>
-        <div class="field">
-          <span class="field-label">Логотипы инструментов</span>
-          <div class="seg" data-control="marketLogo">
-            <button type="button" data-value="1" aria-pressed="true">Показывать</button>
-            <button type="button" data-value="0">Скрыть</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="stage">
-      <div class="widget h-market" id="w-market"></div>
-      <details><summary>Параметры виджета</summary><pre id="c-market"></pre></details>
-    </div>
+    <h2>Market Data</h2>
+    <div class="widget h-market" id="w-market"></div>
   </section>
 
-  <!-- 2. Symbol Overview -->
   <section class="block" id="overview">
-    <div class="info">
+    <div class="block-head">
       <h2>Symbol Overview</h2>
-      <div class="controls">
-        <div class="field">
-          <span class="field-label">Тип графика</span>
-          <div class="seg" data-control="chartType">
-            <button type="button" data-value="line" aria-pressed="true">Линия</button>
-            <button type="button" data-value="candlesticks">Свечи</button>
-            <button type="button" data-value="bars">Бары</button>
-            <button type="button" data-value="area">Область</button>
-          </div>
-        </div>
-        <div class="field">
-          <span class="field-label">Дополнительно</span>
-          <div class="checks">
-            <label><input type="checkbox" id="ovMA"> Скользящая средняя</label>
-            <label><input type="checkbox" id="ovVolume"> Объём</label>
-          </div>
-        </div>
+      <div class="seg" id="chartSeg">
+        <button type="button" data-value="line" aria-pressed="true">Линия</button>
+        <button type="button" data-value="candlesticks" aria-pressed="false">Свечи</button>
       </div>
     </div>
-    <div class="stage">
-      <div class="widget h-overview" id="w-overview"></div>
-      <details><summary>Параметры виджета</summary><pre id="c-overview"></pre></details>
-    </div>
+    <div class="widget h-overview" id="w-overview"></div>
   </section>
 
-  <!-- 3. Heatmap -->
   <section class="block" id="heatmap">
-    <div class="info">
-      <h2>Heatmap</h2>
-      <div class="controls">
-        <div class="field">
-          <span class="field-label">Рынок</span>
-          <div class="seg" data-control="heatType">
-            <button type="button" data-value="stocks" aria-pressed="true">Акции S&amp;P 500</button>
-            <button type="button" data-value="crypto">Криптовалюты</button>
-            <button type="button" data-value="forex">Валюты</button>
-          </div>
-        </div>
-      </div>    </div>
-    <div class="stage">
-      <div class="widget h-heat" id="w-heat"></div>
-      <details><summary>Параметры виджета</summary><pre id="c-heat"></pre></details>
-    </div>
+    <h2>Heatmap</h2>
+    <div class="widget h-heat" id="w-heat"></div>
   </section>
 
-  <!-- 4. Technical Analysis -->
   <section class="block" id="ta">
-    <div class="info">
-      <h2>Technical Analysis</h2>
-      <div class="controls">
-        <div class="field">
-          <span class="field-label">Инструмент</span>
-          <select id="taSymbol"></select>
-        </div>
-        <div class="field">
-          <span class="field-label">Таймфрейм</span>
-          <select id="taInterval">
-            <option value="1m">1 минута</option>
-            <option value="5m">5 минут</option>
-            <option value="15m">15 минут</option>
-            <option value="30m">30 минут</option>
-            <option value="1h">1 час</option>
-            <option value="2h">2 часа</option>
-            <option value="4h">4 часа</option>
-            <option value="1D" selected>1 день</option>
-            <option value="1W">1 неделя</option>
-            <option value="1M">1 месяц</option>
-          </select>
-        </div>
-        <div class="field">
-          <span class="field-label">Вид</span>
-          <div class="seg" data-control="taMode">
-            <button type="button" data-value="single" aria-pressed="true">Общий</button>
-            <button type="button" data-value="multiple">Три шкалы</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="stage">
-      <div class="widget h-ta" id="w-ta"></div>
-      <details><summary>Параметры виджета</summary><pre id="c-ta"></pre></details>
-    </div>
+    <h2>Technical Analysis</h2>
+    <div class="widget h-ta" id="w-ta"></div>
   </section>
 
-  <!-- 5. Economic Calendar -->
   <section class="block" id="calendar">
-    <div class="info">
-      <h2>Economic Calendar</h2>
-      <div class="controls">
-        <div class="field">
-          <span class="field-label">Важность</span>
-          <div class="seg" data-control="calImportance">
-            <button type="button" data-value="-1,0,1">Все</button>
-            <button type="button" data-value="0,1" aria-pressed="true">Средняя и высокая</button>
-            <button type="button" data-value="1">Только высокая</button>
-          </div>
-        </div>
-        <div class="field">
-          <span class="field-label">Страны</span>
-          <div class="checks" id="calCountries">
-            <label><input type="checkbox" value="us" checked> США</label>
-            <label><input type="checkbox" value="eu" checked> Еврозона</label>
-            <label><input type="checkbox" value="gb" checked> Великобритания</label>
-            <label><input type="checkbox" value="jp"> Япония</label>
-            <label><input type="checkbox" value="cn"> Китай</label>
-            <label><input type="checkbox" value="ru"> Россия</label>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="stage">
-      <div class="widget h-cal" id="w-cal"></div>
-      <details><summary>Параметры виджета</summary><pre id="c-cal"></pre></details>
-    </div>
+    <h2>Economic Calendar</h2>
+    <div class="widget h-cal" id="w-cal"></div>
   </section>
 
-  <!-- 6. Screener -->
   <section class="block" id="screener">
-    <div class="info">
-      <h2>Screener</h2>
-      <div class="controls">
-        <div class="field">
-          <span class="field-label">Рынок</span>
-          <div class="seg" data-control="scrMarket">
-            <button type="button" data-value="forex" aria-pressed="true">Валюты</button>
-            <button type="button" data-value="crypto">Криптовалюты</button>
-            <button type="button" data-value="america">Акции США</button>
-            <button type="button" data-value="russia">Акции РФ</button>
-          </div>
-        </div>
-        <div class="field">
-          <span class="field-label">Набор колонок</span>
-          <select id="scrColumn">
-            <option value="overview">Обзор</option>
-            <option value="performance">Динамика</option>
-            <option value="oscillators">Осцилляторы</option>
-            <option value="moving_averages">Скользящие средние</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <div class="stage">
-      <div class="widget h-screener" id="w-screener"></div>
-      <details><summary>Параметры виджета</summary><pre id="c-screener"></pre></details>
-    </div>
+    <h2>Screener</h2>
+    <div class="widget h-screener" id="w-screener"></div>
   </section>
 
 </main>
@@ -365,33 +170,18 @@
 <script>
   // Инструменты для примеров
   var SYMBOLS = [
-    { tv: "FX:EURUSD",       name: "EUR/USD",     group: "Валюты и металлы" },
-    { tv: "OANDA:XAUUSD",    name: "Золото",      group: "Валюты и металлы" },
-    { tv: "BITSTAMP:BTCUSD", name: "Bitcoin",     group: "Криптовалюта" },
-    { tv: "NASDAQ:AAPL",     name: "Apple",       group: "Акции и сырьё" },
-    { tv: "TVC:UKOIL",       name: "Нефть Brent", group: "Акции и сырьё" }
+    { tv: "FX:EURUSD",       name: "EUR/USD" },
+    { tv: "OANDA:XAUUSD",    name: "Золото" },
+    { tv: "BITSTAMP:BTCUSD", name: "Bitcoin" },
+    { tv: "NASDAQ:AAPL",     name: "Apple" },
+    { tv: "TVC:UKOIL",       name: "Нефть Brent" }
   ];
 
-  // Ссылка «by TradingView» под каждым виджетом. Сейчас скрыта по заданию.
-  // Условия TradingView требуют её показывать: чтобы вернуть, поставить true.
-  var SHOW_COPYRIGHT = false;
+  var theme = "light";
+  var chartType = "line";
 
-  var BASE = "https://s3.tradingview.com/external-embedding/";
-
-  var state = {
-    theme: "light",
-    tapeMode: "adaptive",
-    tapeLogo: "1",
-    marketGroup: "one",
-    marketLogo: "1",
-    chartType: "line",
-    heatType: "stocks",
-    taMode: "single",
-    calImportance: "0,1",
-    scrMarket: "forex"
-  };
-
-  // Вставляет виджет в контейнер: старый удаляется, новый создаётся заново
+  // Вставляет виджет в контейнер: старый удаляется, новый создаётся заново.
+  // Ссылка «by TradingView» под виджетом не добавляется.
   function mount(id, file, config) {
     var box = document.getElementById("w-" + id);
     box.innerHTML = "";
@@ -402,71 +192,53 @@
     inner.className = "tradingview-widget-container__widget";
     container.appendChild(inner);
 
-    if (SHOW_COPYRIGHT) {
-      var copy = document.createElement("div");
-      copy.className = "tradingview-widget-copyright";
-      copy.innerHTML = '<a href="https://ru.tradingview.com/" rel="noopener nofollow" target="_blank">Данные TradingView</a>';
-      container.appendChild(copy);
-    }
-
     var script = document.createElement("script");
     script.type = "text/javascript";
     script.async = true;
-    script.src = BASE + file;
+    script.src = "https://s3.tradingview.com/external-embedding/" + file;
     script.textContent = JSON.stringify(config);
     container.appendChild(script);
 
     box.appendChild(container);
-    document.getElementById("c-" + id).textContent =
-      "Скрипт: " + file + "\n\n" + JSON.stringify(config, null, 2);
   }
 
   function renderTape() {
     mount("tape", "embed-widget-ticker-tape.js", {
       symbols: SYMBOLS.map(function (s) { return { proName: s.tv, title: s.name }; }),
-      showSymbolLogo: state.tapeLogo === "1",
+      showSymbolLogo: true,
       isTransparent: false,
-      displayMode: state.tapeMode,
-      colorTheme: state.theme,
+      displayMode: "adaptive",
+      colorTheme: theme,
       locale: "ru"
     });
   }
 
   function renderMarket() {
-    var groups;
-    if (state.marketGroup === "one") {
-      groups = [{ name: "Популярные", symbols: SYMBOLS.map(function (s) { return { name: s.tv, displayName: s.name }; }) }];
-    } else {
-      groups = [];
-      SYMBOLS.forEach(function (s) {
-        var g = groups.find(function (x) { return x.name === s.group; });
-        if (!g) { g = { name: s.group, symbols: [] }; groups.push(g); }
-        g.symbols.push({ name: s.tv, displayName: s.name });
-      });
-    }
     mount("market", "embed-widget-market-quotes.js", {
       width: "100%",
       height: "100%",
-      symbolsGroups: groups,
-      showSymbolLogo: state.marketLogo === "1",
+      symbolsGroups: [{
+        name: "Популярные",
+        symbols: SYMBOLS.map(function (s) { return { name: s.tv, displayName: s.name }; })
+      }],
+      showSymbolLogo: true,
       isTransparent: false,
-      colorTheme: state.theme,
+      colorTheme: theme,
       locale: "ru"
     });
   }
 
   function renderOverview() {
-    var t = state.chartType;
-    var config = {
+    mount("overview", "embed-widget-symbol-overview.js", {
       symbols: SYMBOLS.map(function (s) { return [s.name, s.tv + "|1M"]; }),
       chartOnly: false,
       width: "100%",
       height: "100%",
       locale: "ru",
-      colorTheme: state.theme,
+      colorTheme: theme,
       autosize: true,
-      showVolume: document.getElementById("ovVolume").checked,
-      showMA: document.getElementById("ovMA").checked,
+      showVolume: false,
+      showMA: false,
       hideDateRanges: false,
       hideMarketStatus: false,
       hideSymbolLogo: false,
@@ -477,196 +249,119 @@
       noTimeScale: false,
       valuesTracking: "1",
       changeMode: "price-and-percent",
-      chartType: t,
-      maLineColor: "#c98a2b",
-      maLineWidth: 1,
-      maLength: 9,
+      chartType: chartType,
+      lineWidth: 2,
+      lineType: 0,
+      upColor: "#22ab94",
+      downColor: "#f7525f",
+      borderUpColor: "#22ab94",
+      borderDownColor: "#f7525f",
+      wickUpColor: "#22ab94",
+      wickDownColor: "#f7525f",
       // Период|размер одной свечи. Свечи крупнее, чтобы их было видно
       dateRanges: ["1d|15", "5d|60", "1m|240", "3m|1D", "12m|1W", "all|1M"]
-    };
-    if (t === "line" || t === "area") {
-      config.lineWidth = 2;
-      config.lineType = 0;
-      config.lineColor = "#2f6b5a";
-      if (t === "area") {
-        config.topColor = "rgba(47, 107, 90, 0.3)";
-        config.bottomColor = "rgba(47, 107, 90, 0)";
-      }
-    } else {
-      config.upColor = "#22ab94";
-      config.downColor = "#f7525f";
-      config.borderUpColor = "#22ab94";
-      config.borderDownColor = "#f7525f";
-      config.wickUpColor = "#22ab94";
-      config.wickDownColor = "#f7525f";
-    }
-    mount("overview", "embed-widget-symbol-overview.js", config);
+    });
   }
 
   function renderHeat() {
-    if (state.heatType === "stocks") {
-      mount("heat", "embed-widget-stock-heatmap.js", {
-        exchanges: [],
-        dataSource: "SPX500",
-        grouping: "sector",
-        blockSize: "market_cap_basic",
-        blockColor: "change",
-        locale: "ru",
-        symbolUrl: "",
-        colorTheme: state.theme,
-        hasTopBar: true,
-        isDataSetEnabled: true,
-        isZoomEnabled: true,
-        hasSymbolTooltip: true,
-        isMonoSize: false,
-        width: "100%",
-        height: "100%"
-      });
-    } else if (state.heatType === "crypto") {
-      mount("heat", "embed-widget-crypto-coins-heatmap.js", {
-        dataSource: "Crypto",
-        blockSize: "market_cap_calc",
-        blockColor: "24h_close_change|5",
-        locale: "ru",
-        symbolUrl: "",
-        colorTheme: state.theme,
-        hasTopBar: true,
-        isDataSetEnabled: true,
-        isZoomEnabled: true,
-        hasSymbolTooltip: true,
-        isMonoSize: false,
-        width: "100%",
-        height: "100%"
-      });
-    } else {
-      mount("heat", "embed-widget-forex-heat-map.js", {
-        width: "100%",
-        height: "100%",
-        currencies: ["EUR", "USD", "JPY", "GBP", "CHF", "AUD", "CAD", "CNY"],
-        isTransparent: false,
-        colorTheme: state.theme,
-        locale: "ru"
-      });
-    }
+    mount("heat", "embed-widget-stock-heatmap.js", {
+      exchanges: [],
+      dataSource: "SPX500",
+      grouping: "sector",
+      blockSize: "market_cap_basic",
+      blockColor: "change",
+      locale: "ru",
+      symbolUrl: "",
+      colorTheme: theme,
+      hasTopBar: true,
+      isDataSetEnabled: true,
+      isZoomEnabled: true,
+      hasSymbolTooltip: true,
+      isMonoSize: false,
+      width: "100%",
+      height: "100%"
+    });
   }
 
   function renderTA() {
     mount("ta", "embed-widget-technical-analysis.js", {
-      interval: document.getElementById("taInterval").value,
+      interval: "1D",
       width: "100%",
       height: "100%",
       isTransparent: false,
-      symbol: document.getElementById("taSymbol").value,
+      symbol: "FX:EURUSD",
       showIntervalTabs: true,
-      displayMode: state.taMode,
+      displayMode: "single",
       locale: "ru",
-      colorTheme: state.theme
+      colorTheme: theme
     });
   }
 
   function renderCal() {
-    var countries = Array.prototype.slice
-      .call(document.querySelectorAll("#calCountries input:checked"))
-      .map(function (i) { return i.value; });
     mount("cal", "embed-widget-events.js", {
-      colorTheme: state.theme,
+      colorTheme: theme,
       isTransparent: false,
       width: "100%",
       height: "100%",
       locale: "ru",
-      importanceFilter: state.calImportance,
-      countryFilter: countries.join(",")
+      importanceFilter: "0,1",
+      countryFilter: "us,eu,gb,jp,cn"
     });
   }
 
   function renderScreener() {
-    var config = {
+    mount("screener", "embed-widget-screener.js", {
       width: "100%",
       height: "100%",
-      defaultColumn: document.getElementById("scrColumn").value,
+      defaultColumn: "overview",
       defaultScreen: "general",
-      market: state.scrMarket,
+      market: "forex",
       showToolbar: true,
-      colorTheme: state.theme,
+      colorTheme: theme,
       locale: "ru",
       isTransparent: false
-    };
-    if (state.scrMarket === "crypto") {
-      config.screener_type = "crypto_mkt";
-      config.displayCurrency = "USD";
-    }
-    if (state.scrMarket === "america" || state.scrMarket === "russia") {
-      config.defaultScreen = "most_capitalized";
-    }
-    mount("screener", "embed-widget-screener.js", config);
+    });
   }
-
-  // Какие виджеты перерисовать при смене каждой настройки
-  var RENDER_BY_CONTROL = {
-    tapeMode: renderTape,
-    tapeLogo: renderTape,
-    marketGroup: renderMarket,
-    marketLogo: renderMarket,
-    chartType: renderOverview,
-    heatType: renderHeat,
-    taMode: renderTA,
-    calImportance: renderCal,
-    scrMarket: renderScreener
-  };
 
   function renderAll() {
     renderTape(); renderMarket(); renderOverview(); renderHeat();
     renderTA(); renderCal(); renderScreener();
   }
 
-  // Кнопки-переключатели
-  document.querySelectorAll(".seg[data-control]").forEach(function (seg) {
-    var key = seg.getAttribute("data-control");
-    seg.addEventListener("click", function (e) {
-      var btn = e.target.closest("button");
-      if (!btn || btn.getAttribute("aria-pressed") === "true") return;
-      seg.querySelectorAll("button").forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
-      btn.setAttribute("aria-pressed", "true");
-      state[key] = btn.getAttribute("data-value");
-      RENDER_BY_CONTROL[key]();
+  // Отмечает нажатую кнопку в группе
+  function press(seg, value) {
+    seg.querySelectorAll("button").forEach(function (b) {
+      b.setAttribute("aria-pressed", b.getAttribute("data-value") === value ? "true" : "false");
     });
+  }
+
+  // Линия / Свечи
+  var chartSeg = document.getElementById("chartSeg");
+  chartSeg.addEventListener("click", function (e) {
+    var btn = e.target.closest("button");
+    if (!btn || btn.getAttribute("data-value") === chartType) return;
+    chartType = btn.getAttribute("data-value");
+    press(chartSeg, chartType);
+    renderOverview();
   });
 
-  // Список инструментов для технического анализа
-  var taSymbol = document.getElementById("taSymbol");
-  SYMBOLS.forEach(function (s) {
-    var o = document.createElement("option");
-    o.value = s.tv; o.textContent = s.name;
-    taSymbol.appendChild(o);
-  });
-
-  taSymbol.addEventListener("change", renderTA);
-  document.getElementById("taInterval").addEventListener("change", renderTA);
-  document.getElementById("ovMA").addEventListener("change", renderOverview);
-  document.getElementById("ovVolume").addEventListener("change", renderOverview);
-  document.getElementById("calCountries").addEventListener("change", renderCal);
-  document.getElementById("scrColumn").addEventListener("change", renderScreener);
-
-  // Тема для страницы и всех виджетов сразу
+  // Тема для страницы и всех виджетов сразу, запоминается между заходами
   var themeSeg = document.getElementById("themeSeg");
 
-  function applyTheme(theme) {
-    state.theme = theme;
-    document.documentElement.setAttribute("data-theme", theme);
-    themeSeg.querySelectorAll("button").forEach(function (b) {
-      b.setAttribute("aria-pressed", b.getAttribute("data-value") === theme ? "true" : "false");
-    });
+  function applyTheme(value) {
+    theme = value;
+    document.documentElement.setAttribute("data-theme", value);
+    press(themeSeg, value);
   }
 
   themeSeg.addEventListener("click", function (e) {
     var btn = e.target.closest("button");
-    if (!btn || btn.getAttribute("data-value") === state.theme) return;
+    if (!btn || btn.getAttribute("data-value") === theme) return;
     applyTheme(btn.getAttribute("data-value"));
-    try { localStorage.setItem("tv-demo-theme", state.theme); } catch (err) {}
+    try { localStorage.setItem("tv-demo-theme", theme); } catch (err) {}
     renderAll();
   });
 
-  // Выбранная тема запоминается между заходами
   var savedTheme = null;
   try { savedTheme = localStorage.getItem("tv-demo-theme"); } catch (err) {}
   applyTheme(savedTheme === "dark" ? "dark" : "light");
