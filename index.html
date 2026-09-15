@@ -24,7 +24,7 @@
     --accent-soft: #23302c;
   }
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+  html { scroll-behavior: smooth; scroll-padding-top: 130px; }
   body {
     margin: 0;
     background: var(--bg);
@@ -76,24 +76,31 @@
   }
   .widget .tradingview-widget-container,
   .widget .tradingview-widget-container__widget { height: 100%; width: 100%; }
-  .h-tape { min-height: 46px; }
-  .h-market { height: 290px; }
+  /* Бегущая строка в шапке */
+  .tape { min-height: 46px; border-top: 1px solid var(--line); }
+  .tape .tradingview-widget-container { width: 100%; }
+
+  /* Два виджета в один ряд */
+  .pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+
   .h-overview { height: 520px; }
+  .h-pair { height: 400px; }
   .h-heat { height: 580px; }
-  .h-ta { height: 450px; }
   .h-cal { height: 580px; }
   .h-screener { height: 600px; }
 
+  @media (max-width: 980px) {
+    .pair { grid-template-columns: 1fr; gap: 40px; }
+  }
   @media (max-width: 640px) {
     h1 { font-size: 27px; }
     h2 { font-size: 22px; }
     .top-inner { padding: 10px 16px; gap: 10px; }
     .brand { display: none; }
     .wrap { padding: 28px 16px 60px; gap: 40px; }
-    .h-market { height: 300px; }
     .h-overview { height: 440px; }
+    .h-pair { height: 360px; }
     .h-heat { height: 480px; }
-    .h-ta { height: 440px; }
     .h-cal { height: 520px; }
     .h-screener { height: 520px; }
   }
@@ -105,11 +112,10 @@
   <div class="top-inner">
     <div class="brand">Виджеты TradingView</div>
     <nav class="nav">
-      <a href="#tape">Ticker Tape</a>
-      <a href="#market">Market Data</a>
       <a href="#overview">Symbol Overview</a>
-      <a href="#heatmap">Heatmap</a>
+      <a href="#market">Market Data</a>
       <a href="#ta">Technical Analysis</a>
+      <a href="#heatmap">Heatmap</a>
       <a href="#calendar">Economic Calendar</a>
       <a href="#screener">Screener</a>
     </nav>
@@ -118,21 +124,13 @@
       <button type="button" data-value="dark" aria-pressed="false">Тёмная</button>
     </div>
   </div>
+  <!-- Бегущая строка котировок: сразу под меню, на всю ширину экрана -->
+  <div class="tape" id="w-tape"></div>
 </header>
 
 <main class="wrap">
 
   <h1>Виджеты TradingView</h1>
-
-  <section class="block" id="tape">
-    <h2>Ticker Tape</h2>
-    <div class="widget h-tape" id="w-tape"></div>
-  </section>
-
-  <section class="block" id="market">
-    <h2>Market Data</h2>
-    <div class="widget h-market" id="w-market"></div>
-  </section>
 
   <section class="block" id="overview">
     <div class="block-head">
@@ -145,14 +143,21 @@
     <div class="widget h-overview" id="w-overview"></div>
   </section>
 
+  <div class="pair">
+    <section class="block" id="market">
+      <h2>Market Data</h2>
+      <div class="widget h-pair" id="w-market"></div>
+    </section>
+
+    <section class="block" id="ta">
+      <h2>Technical Analysis</h2>
+      <div class="widget h-pair" id="w-ta"></div>
+    </section>
+  </div>
+
   <section class="block" id="heatmap">
     <h2>Heatmap</h2>
     <div class="widget h-heat" id="w-heat"></div>
-  </section>
-
-  <section class="block" id="ta">
-    <h2>Technical Analysis</h2>
-    <div class="widget h-ta" id="w-ta"></div>
   </section>
 
   <section class="block" id="calendar">
@@ -324,8 +329,8 @@
   }
 
   function renderAll() {
-    renderTape(); renderMarket(); renderOverview(); renderHeat();
-    renderTA(); renderCal(); renderScreener();
+    renderTape(); renderOverview(); renderMarket(); renderTA();
+    renderHeat(); renderCal(); renderScreener();
   }
 
   // Отмечает нажатую кнопку в группе
