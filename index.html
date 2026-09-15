@@ -54,7 +54,7 @@
   .nav a:hover { background: var(--accent-soft); color: var(--text); }
 
   /* Переключатели */
-  .seg { display: flex; gap: 6px; }
+  .seg { display: flex; flex-wrap: wrap; gap: 6px; }
   .seg button {
     font: inherit; font-size: 14px; cursor: pointer;
     border: 1px solid var(--line); background: var(--surface); color: var(--text);
@@ -81,7 +81,7 @@
   .tape .tradingview-widget-container { width: 100%; }
 
   /* Два виджета в один ряд */
-  .pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+  .pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: end; }
 
   .h-overview { height: 520px; }
   .h-pair { height: 400px; }
@@ -150,7 +150,10 @@
     </section>
 
     <section class="block" id="ta">
-      <h2>Technical Analysis</h2>
+      <div class="block-head">
+        <h2>Technical Analysis</h2>
+        <div class="seg" id="taSeg"></div>
+      </div>
       <div class="widget h-pair" id="w-ta"></div>
     </section>
   </div>
@@ -184,6 +187,7 @@
 
   var theme = "light";
   var chartType = "line";
+  var taSymbol = SYMBOLS[0].tv;
 
   // Вставляет виджет в контейнер: старый удаляется, новый создаётся заново.
   // Ссылка «by TradingView» под виджетом не добавляется.
@@ -295,7 +299,7 @@
       width: "100%",
       height: "100%",
       isTransparent: false,
-      symbol: "FX:EURUSD",
+      symbol: taSymbol,
       showIntervalTabs: true,
       displayMode: "single",
       locale: "ru",
@@ -349,6 +353,24 @@
     chartType = btn.getAttribute("data-value");
     press(chartSeg, chartType);
     renderOverview();
+  });
+
+  // Кнопки инструментов для технического анализа
+  var taSeg = document.getElementById("taSeg");
+  SYMBOLS.forEach(function (s) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.setAttribute("data-value", s.tv);
+    b.textContent = s.name;
+    taSeg.appendChild(b);
+  });
+  press(taSeg, taSymbol);
+  taSeg.addEventListener("click", function (e) {
+    var btn = e.target.closest("button");
+    if (!btn || btn.getAttribute("data-value") === taSymbol) return;
+    taSymbol = btn.getAttribute("data-value");
+    press(taSeg, taSymbol);
+    renderTA();
   });
 
   // Тема для страницы и всех виджетов сразу, запоминается между заходами
