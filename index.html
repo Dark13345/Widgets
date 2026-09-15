@@ -272,7 +272,8 @@
     mount("heat", "embed-widget-stock-heatmap.js", {
       exchanges: [],
       dataSource: "SPX500",
-      grouping: "sector",
+      // Одна сплошная карта, без разбивки на отрасли
+      grouping: "no_group",
       blockSize: "market_cap_basic",
       blockColor: "change",
       locale: "ru",
