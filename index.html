@@ -81,10 +81,16 @@
   .tape .tradingview-widget-container { width: 100%; }
 
   /* Два виджета в один ряд */
-  .pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: end; }
+  .pair { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 3fr); gap: 24px; }
+
+  /* Технический анализ: кнопки инструментов полоской над виджетом */
+  .ta-card { display: flex; flex-direction: column; }
+  .ta-bar { padding: 10px; border-bottom: 1px solid var(--line); }
+  .ta-bar button { font-size: 13px; padding: 4px 10px; }
+  .ta-frame { flex: 1; min-height: 0; }
 
   .h-overview { height: 520px; }
-  .h-pair { height: 400px; }
+  .h-pair { height: 440px; }
   .h-heat { height: 580px; }
   .h-cal { height: 580px; }
   .h-screener { height: 600px; }
@@ -99,7 +105,7 @@
     .brand { display: none; }
     .wrap { padding: 28px 16px 60px; gap: 40px; }
     .h-overview { height: 440px; }
-    .h-pair { height: 360px; }
+    .h-pair { height: 420px; }
     .h-heat { height: 480px; }
     .h-cal { height: 520px; }
     .h-screener { height: 520px; }
@@ -150,11 +156,11 @@
     </section>
 
     <section class="block" id="ta">
-      <div class="block-head">
-        <h2>Technical Analysis</h2>
-        <div class="seg" id="taSeg"></div>
+      <h2>Technical Analysis</h2>
+      <div class="widget h-pair ta-card">
+        <div class="seg ta-bar" id="taSeg"></div>
+        <div class="ta-frame" id="w-ta"></div>
       </div>
-      <div class="widget h-pair" id="w-ta"></div>
     </section>
   </div>
 
